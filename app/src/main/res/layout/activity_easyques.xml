@@ -10,14 +10,6 @@
         android:layout_height="wrap_content"
         android:background="#00FFFF">
 
-        <TextView
-            android:id="@+id/Name_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="#fff"
-            android:textSize="50sp" />
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,24 +17,24 @@
             android:padding="10sp">
 
             <TextView
+                android:id="@+id/TxtQuiz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Quiz "
                 android:textColor="#fff"
-                android:textSize="40sp"
+                android:textSize="50sp"
                 android:textStyle="bold" />
 
+
             <TextView
-                android:id="@+id/TxtQuiz"
+                android:id="@+id/TxtCau"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""
+                android:text="1"
                 android:textColor="#fff"
                 android:textSize="50sp"
                 android:textStyle="bold" />
         </LinearLayout>
-
-
     </RelativeLayout>
 
     <ScrollView
@@ -59,8 +51,8 @@
             <ImageView
                 android:id="@+id/ImgQuestion"
                 android:layout_width="match_parent"
-                android:layout_height="250sp"
-                android:src="@drawable/download" />
+                android:layout_height="200sp"
+               />
 
             <LinearLayout
                 android:id="@+id/layout_question"
@@ -79,7 +71,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5sp"
-                    android:text="A"
+                    android:text=""
                     android:textSize="20sp" />
 
                 <RadioButton
@@ -87,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5sp"
-                    android:text="B"
+                    android:text=""
                     android:textSize="20sp" />
 
                 <RadioButton
@@ -95,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5sp"
-                    android:text="C"
+                    android:text=""
                     android:textSize="20sp" />
 
                 <RadioButton
@@ -103,17 +95,26 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="5sp"
-                    android:text="D"
+                    android:text=""
                     android:textSize="20sp" />
 
+                <TextView
+                    android:id="@+id/txtKetqua"
+                    android:layout_width="match_parent"
+                    android:text="0"
+                    android:textSize="30dp"
+                    android:layout_height="57dp"
+                    android:textAlignment="center" />
+
             </RadioGroup>
+
 
         </LinearLayout>
     </ScrollView>
 
     <Button
         android:id="@+id/Btntraloi"
-        android:layout_width="300sp"
+        android:layout_width="200sp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="#3366CC"
