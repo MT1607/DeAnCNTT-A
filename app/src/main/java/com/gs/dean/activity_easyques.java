@@ -5,7 +5,10 @@ import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +39,7 @@ import org.w3c.dom.NodeList;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ListIterator;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -48,20 +52,27 @@ public class activity_easyques extends Activity {
     RadioButton B;
     RadioButton C;
     RadioButton D;
-    TextView socau,ketqua;
+    TextView socau,ketqua,thoigian;
     Button bt;
     ImageView img;
     int total = 0;
+    int a=0;
+    int questionnumber=1;
     int kq = 0;
     Question question;
 
+    ArrayList<Integer> number = new ArrayList<>();
+
     DatabaseReference databaseReference;
     String TAG="MainActivity";
-
+    AudioManager audioManager;
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_easyques);
+
+        thoigian = (TextView)findViewById(R.id.time);
         socau = (TextView)findViewById(R.id.TxtCau);
         rg = (RadioGroup)findViewById(R.id.Rdgroup);
         bt = (Button)findViewById(R.id.Btntraloi);
@@ -72,6 +83,14 @@ public class activity_easyques extends Activity {
         C = (RadioButton)findViewById(R.id.RbtC);
         D = (RadioButton)findViewById(R.id.RbtD);
 
+        reverserTimer(90,thoigian);
+        mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.music_kahoot);
+        mediaPlayer.start();
+        mediaPlayer.setLooping(true);
+        for (int i = 1; i<6;i++){
+            number.add(i);
+        }
+        Collections.shuffle(number);
 
         easyquestion();
 
@@ -104,16 +123,19 @@ public class activity_easyques extends Activity {
                         }
                         break;
                 }
-                if(total >= 5){
+
+                if(questionnumber >= 5){
+                    mediaPlayer.stop();
                     Intent intent = new Intent(activity_easyques.this,activity_ketqua.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("KQ", kq);
-                    bundle.putInt("Socau", total);
+                    bundle.putInt("Socau", questionnumber);
                     intent.putExtra("MyPackage",bundle);
                     startActivity(intent);
                 } else{
+                    questionnumber++;
                     easyquestion();
-                    socau.setText(""+total);
+                    socau.setText(""+questionnumber);
                     ketqua.setText(""+kq);
                 }
 
@@ -124,7 +146,10 @@ public class activity_easyques extends Activity {
     }
 
     void easyquestion() {
-        total++;
+       // total++;
+
+        total = number.get(a);
+        a++;
         databaseReference = FirebaseDatabase.getInstance().getReference().child("question_database").child("question_easy").child(String.valueOf(total));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -135,7 +160,6 @@ public class activity_easyques extends Activity {
                 B.setText(question.getAnswerB());
                 C.setText(question.getAnswerC());
                 D.setText(question.getAnswerD());
-
                 rg.clearCheck();
             }
             @Override
@@ -143,6 +167,29 @@ public class activity_easyques extends Activity {
                 Log.w(TAG,error.getMessage());
             }
         });
+    }
+    public void reverserTimer(int giay,TextView thoigian){
+        new CountDownTimer(giay*1000+1000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int giay = (int) (millisUntilFinished/1000);
+                int phut = giay / 60;
+                giay = giay % 60;
+                thoigian.setText(phut+":"+giay);
+
+            }
+
+            @Override
+            public void onFinish() {
+                thoigian.setText("Het Gio!");
+                Intent intent = new Intent(activity_easyques.this,activity_ketqua.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("KQ", kq);
+                bundle.putInt("Socau", questionnumber);
+                intent.putExtra("MyPackage",bundle);
+                startActivity(intent);
+            }
+        }.start();
     }
 
 

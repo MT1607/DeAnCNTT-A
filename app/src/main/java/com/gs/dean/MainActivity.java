@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Build;
@@ -15,18 +16,14 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 
 
-public class MainActivity<acct> extends AppCompatActivity {
-    private SoundPool soundPool;
-    public static AudioManager audioManager;
+public class MainActivity extends AppCompatActivity {
+    SoundPool soundPool;
+    AudioManager audioManager;
+    MediaPlayer mediaPlayer;
     Button B1,B2,B3;
-
-    private boolean loaded;
-    private static final int MAX_STREAMS = 5;
-    private static final int streamType = AudioManager.STREAM_MUSIC;
-    private int soundMusic;
-    private float volume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +40,8 @@ public class MainActivity<acct> extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, activity_easyques.class);
                 startActivity(intent);
+
+
             }
         });
 

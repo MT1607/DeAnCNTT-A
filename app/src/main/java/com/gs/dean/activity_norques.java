@@ -2,7 +2,10 @@ package com.gs.dean;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -26,20 +29,26 @@ import com.gs.dean.model.Question;
 import com.squareup.picasso.Picasso;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class activity_norques extends Activity {
     ScrollView sv;
     RadioGroup rg;
     RadioButton A,B,C,D;
-    TextView socau,ketqua;
+    TextView socau,ketqua,thoigian;
     Button bt;
     int total = 0;
+    int quesnumber = 1;
+    int a = 0;
     int kq=0;
     ImageView img;
     Question question;
-
+    ArrayList<Integer> number = new ArrayList<>();
     DatabaseReference databaseReference;
     String TAG="MainActivity";
+    AudioManager audioManager;
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,9 +62,18 @@ public class activity_norques extends Activity {
         D = (RadioButton)findViewById(R.id.RbtD);
         ketqua = (TextView)findViewById(R.id.txtKetqua);
         socau = (TextView)findViewById(R.id.TxtCau);
+        thoigian = (TextView)findViewById(R.id.time);
         img = (ImageView)findViewById(R.id.ImgQuestion);
 
+        reverserTimer(90,thoigian);
+        mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.kahoot_music_3);
+        mediaPlayer.start();
+        mediaPlayer.setLooping(true);
 
+        for (int i = 1; i < 6;i++){
+            number.add(i);
+        }
+        Collections.shuffle(number);
 
         normalquestion();
 
@@ -88,16 +106,18 @@ public class activity_norques extends Activity {
                         }
                         break;
                 }
-                if(total >= 5){
+                if(quesnumber >= 5){
+                    mediaPlayer.stop();
                     Intent intent = new Intent(activity_norques.this,activity_ketqua.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("KQ", kq);
-                    bundle.putInt("Socau", total);
+                    bundle.putInt("Socau", quesnumber);
                     intent.putExtra("MyPackage",bundle);
                     startActivity(intent);
                 }else{
+                    quesnumber++;
                     normalquestion();
-                    socau.setText(""+total);
+                    socau.setText(""+quesnumber);
                     ketqua.setText(""+kq);
                 }
             }
@@ -107,7 +127,8 @@ public class activity_norques extends Activity {
     }
 
     private void normalquestion() {
-        total++;
+        total = number.get(a);
+        a++;
         databaseReference = FirebaseDatabase.getInstance().getReference().child("question_database").child("question_normal").child(String.valueOf(total));
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -127,5 +148,28 @@ public class activity_norques extends Activity {
                 Log.w(TAG,error.getMessage());
             }
         });
+    }
+    public void reverserTimer(int giay,TextView thoigian) {
+        new CountDownTimer(giay * 1000 + 1000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                int giay = (int) (millisUntilFinished / 1000);
+                int phut = giay / 60;
+                giay = giay % 60;
+                thoigian.setText(phut + ":" + giay);
+
+            }
+
+            @Override
+            public void onFinish() {
+                thoigian.setText("Het Gio!");
+                Intent intent = new Intent(activity_norques.this, activity_ketqua.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("KQ", kq);
+                bundle.putInt("Socau", quesnumber);
+                intent.putExtra("MyPackage", bundle);
+                startActivity(intent);
+            }
+        }.start();
     }
 }
