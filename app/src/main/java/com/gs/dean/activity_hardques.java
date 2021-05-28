@@ -1,6 +1,7 @@
 package com.gs.dean;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -10,6 +11,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -25,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.gs.dean.model.Question;
+import com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -35,36 +38,52 @@ import java.util.Collections;
 public class activity_hardques extends Activity {
     ScrollView sv;
     EditText editText;
-    TextView socau,ketqua,thoigian;
+    TextView exit ;
     Button bt;
-    ImageView img;
+    ImageView img,back;
     Question question;
     int total=0;
-    int kq = 0;
+    int kq = 0,wrong = 0;
     int quesnumber = 1;
     int a = 0;
+    int timeValue = 120;
     ArrayList<Integer> number = new ArrayList<>();
     DatabaseReference databaseReference;
     String TAG="MainActivity";
     AudioManager audioManager;
     MediaPlayer mediaPlayer;
+    CountDownTimer countDownTimer;
+    RoundedHorizontalProgressBar roundedHorizontalProgressBar;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hardques);
 
-        thoigian=(TextView)findViewById(R.id.time);
         bt = (Button)findViewById(R.id.Btntraloi);
         editText = (EditText)findViewById(R.id.edit_answer);
-        socau = (TextView)findViewById(R.id.TxtQuiz);
-        ketqua = (TextView)findViewById(R.id.txtKetqua);
         img = (ImageView)findViewById(R.id.ImgQuestion);
+        back = findViewById(R.id.ic_back);
+        exit = findViewById(R.id.ic_exit);
 
-        reverserTimer(120,thoigian);
-        mediaPlayer = MediaPlayer.create(getApplicationContext(),R.raw.kahoot_music_4);
-        mediaPlayer.start();
-        mediaPlayer.setLooping(true);
-        for (int i = 1;i < 6;i++){
+        roundedHorizontalProgressBar = findViewById(R.id.progress_bar_1);
+        CountDownTimer countDownTimer = new CountDownTimer(120000,1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                timeValue = timeValue - 1;
+                roundedHorizontalProgressBar.setProgress(timeValue);
+            }
+
+            @Override
+            public void onFinish() {
+                Dialog dialog = new Dialog(activity_hardques.this,R.style.Dialog);
+                dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
+                dialog.setContentView(R.layout.time_out_dialog);
+                dialog.show();
+            }
+        }.start();
+
+        for (int i = 1;i < 27;i++){
             number.add(i);
         }
         Collections.shuffle(number);
@@ -82,8 +101,7 @@ public class activity_hardques extends Activity {
                     editText.getText().clear();
                 }
 
-                if (quesnumber>=5){
-                    mediaPlayer.stop();
+                if (quesnumber >= 10){
                     Intent intent = new Intent(activity_hardques.this,activity_ketqua.class);
                     Bundle bundle = new Bundle();
                     bundle.putInt("KQ",kq);
@@ -93,8 +111,6 @@ public class activity_hardques extends Activity {
                 }else{
                     quesnumber++;
                     hardques();
-                    socau.setText(""+quesnumber);
-                    ketqua.setText(""+kq);
                 }
             }
 
@@ -118,27 +134,5 @@ public class activity_hardques extends Activity {
             }
         });
     }
-    public void reverserTimer(int giay,TextView thoigian) {
-        new CountDownTimer(giay * 1000 + 1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                int giay = (int) (millisUntilFinished / 1000);
-                int phut = giay / 60;
-                giay = giay % 60;
-                thoigian.setText(phut + ":" + giay);
-            }
 
-            @Override
-            public void onFinish() {
-                thoigian.setText("Het Gio!");
-                mediaPlayer.stop();
-                Intent intent = new Intent(activity_hardques.this, activity_ketqua.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("KQ", kq);
-                bundle.putInt("Socau", quesnumber);
-                intent.putExtra("MyPackage", bundle);
-                startActivity(intent);
-            }
-        }.start();
-    }
 }

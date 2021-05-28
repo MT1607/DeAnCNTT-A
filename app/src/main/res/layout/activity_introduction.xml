@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/circle_background">
+
+    <RelativeLayout
+        android:id="@+id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <RelativeLayout
+            android:id="@+id/text11"
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+            <ImageView
+                android:id="@+id/ItroUser"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:src="@drawable/play"/>
+
+            <TextView
+                android:layout_width="238dp"
+                android:layout_height="185dp"
+                android:layout_alignParentRight="true"
+                android:text="\t_Nhấp vào đây để bắt đầu chơi game \n _Hãy lựa chọn level phù hợp với bản thân \n _Hãy để ý thời gian"
+                android:textSize="25dp"
+                android:textColor="@color/black"
+                android:textStyle=""/>
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:text="\tNhóm 10 \n Thành Viên: Nguyễn Gia Sơn, Phạm Đắc Công, Trần..."
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_below="@+id/text1"
+        android:layout_marginTop="30dp"
+        />
+
+</RelativeLayout>

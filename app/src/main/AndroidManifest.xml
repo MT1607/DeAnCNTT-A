@@ -20,6 +20,8 @@
         <activity android:name=".activity_norques"/>
         <activity android:name=".activity_hardques"/>
         <activity android:name=".activity_ketqua"/>
+        <activity android:name=".activity_menu"/>
+        <activity android:name=".activity_introduction"/>
     </application>
 
 </manifest>

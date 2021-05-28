@@ -16,4 +16,19 @@
         <item name="colorControlActivated">#28c99e</item>
         <item name="colorControlHighlight">#d94ed0</item>
     </style>
+
+    <style name="ProgessBar">
+        <item name="colorSecondary">#3297ca</item>
+    </style>
+
+    <style name="Timer">
+        <item name="colorSecondary">#FFEB3B</item>
+    </style>
+
+    <style name="Dialog">
+        <item name="android:windowBackground">@drawable/empty_back</item>
+        <item name="windowNoTitle">true</item>
+        <item name="windowMinWidthMajor">80%</item>
+        <item name="windowActionBar">false</item>
+    </style>
 </resources>

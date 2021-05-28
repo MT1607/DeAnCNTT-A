@@ -9,26 +9,24 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
-public class activity_ketqua extends Activity {
-    TextView KQ;
-    Button trove;
+import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 
+public class activity_ketqua extends Activity {
+    CircularProgressBar circularProgressBar;
+    TextView score;
+    int correct,wrong;
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ketqua);
-        trove = (Button)findViewById(R.id.BtnBack);
-        KQ = (TextView)findViewById(R.id.TxtKQ);
 
-        Intent caller = getIntent();
-        Bundle myPackage = caller.getBundleExtra("MyPackage");
-        KQ.setText(myPackage.getInt("KQ")+"/"+myPackage.getInt("Socau"));
-        trove.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity_ketqua.this, MainActivity.class);
-                startActivity(intent);
-            }
-        });
+        correct=getIntent().getIntExtra("correct",0);
+        wrong=getIntent().getIntExtra("wrong",0);
+
+        circularProgressBar = findViewById(R.id.circularProgressBar);
+        score = findViewById(R.id.score);
+
+        circularProgressBar.setProgress(correct);
+        score.setText(correct+"/10");
     }
 }

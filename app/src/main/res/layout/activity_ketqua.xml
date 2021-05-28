@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@drawable/backround">
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Ket Qua Bai Lam"
-        android:textSize="30dp"
-        android:padding="30dp"
-        android:textAlignment="center"
-        android:gravity="center_horizontal" />
+    android:background="@color/blue"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/r12"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true">
 
-    <TextView
-        android:id="@+id/TxtKQ"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="30dp"
-        android:padding="30dp"
-        android:textAlignment="center"
-        android:gravity="center_horizontal" />
+        <com.mikhaellopez.circularprogressbar.CircularProgressBar
+            android:id="@+id/circularProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cpb_background_progressbar_color="@color/green"
+            app:cpb_background_progressbar_width="25dp"
+            app:cpb_progress_direction="to_right"
+            app:cpb_progressbar_color="@color/red"
+            app:cpb_progressbar_width="10dp"
+            app:cpb_round_border="true" />
 
-    <Button
-        android:id="@+id/BtnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Tro Ve"
-        android:textSize="30dp"
-        android:layout_marginTop="30dp"
-        />
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="50dp"
+            android:layout_centerInParent="true"/>
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

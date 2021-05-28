@@ -2,48 +2,52 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#66FFCC"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/r1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#00FFFF">
+        android:layout_height="30dp"
+        android:background="@color/blue">
 
-        <LinearLayout
+
+        <ImageView
+            android:id="@+id/ic_back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/white" />
+
+        <TextView
+            android:id="@+id/ic_exit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10sp">
-
-            <TextView
-                android:id="@+id/TxtQuiz"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Quiz "
-                android:textColor="#fff"
-                android:textSize="50sp"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:id="@+id/TxtCau"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1"
-                android:textColor="#fff"
-                android:textSize="50sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-        <TextView
-            android:id="@+id/time"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="00:00"
-            android:textSize="40sp"
-            android:layout_marginLeft="250sp"
-            android:layout_marginTop="15sp"/>
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:text="Exit"
+            android:textColor="@color/white"
+            android:textSize="20dp" />
     </RelativeLayout>
+
+    <com.sasank.roundedhorizontalprogress.RoundedHorizontalProgressBar
+        android:id="@+id/progress_bar_1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:maxHeight="10dp"
+        android:minHeight="10dp"
+        android:progress="10"
+        android:max="90"
+        android:theme="@style/Timer"
+        android:background="@color/blue"
+        app:backgroundColor="@color/white"
+        app:progressColor="@color/green"/>
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -76,43 +80,68 @@
 
                 <RadioButton
                     android:id="@+id/RbtA"
+                    android:onClick="EventClickA"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@android:color/transparent"
+                    android:background="@drawable/backround_button"
+                    android:textColor="@drawable/text_color"
+                    android:layout_marginTop="5dp"
                     android:padding="5sp"
                     android:text=""
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textAlignment="center"/>
 
                 <RadioButton
                     android:id="@+id/RbtB"
+                    android:onClick="EventClickB"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@android:color/transparent"
+                    android:background="@drawable/backround_button"
+                    android:textColor="@drawable/text_color"
+                    android:layout_marginTop="5dp"
                     android:padding="5sp"
                     android:text=""
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textAlignment="center" />
 
                 <RadioButton
                     android:id="@+id/RbtC"
+                    android:onClick="EventClickC"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@android:color/transparent"
+                    android:background="@drawable/backround_button"
+                    android:textColor="@drawable/text_color"
+                    android:layout_marginTop="5dp"
                     android:padding="5sp"
                     android:text=""
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textAlignment="center" />
 
                 <RadioButton
                     android:id="@+id/RbtD"
+                    android:onClick="EventClickD"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:button="@android:color/transparent"
+                    android:background="@drawable/backround_button"
+                    android:textColor="@drawable/text_color"
+                    android:layout_marginTop="5dp"
                     android:padding="5sp"
                     android:text=""
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:id="@+id/txtKetqua"
-                    android:layout_width="match_parent"
-                    android:text="0"
-                    android:textSize="30dp"
-                    android:layout_height="57dp"
+                    android:textSize="20sp"
                     android:textAlignment="center" />
+
 
             </RadioGroup>
 
@@ -126,5 +155,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:backgroundTint="#3366CC"
-        android:text="OK" />
+        android:text="NEXT" />
 </LinearLayout>
